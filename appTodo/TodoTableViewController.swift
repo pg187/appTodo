@@ -41,7 +41,7 @@ class TodoTableViewController: UITableViewController {
 
         let toDo = toDos[indexPath.row]
         if toDo.complete{
-            cell.textLabel?.text = "✅ " + toDo.title
+            cell.textLabel?.text = "❗️ " + toDo.title
         }
         else
         {
@@ -52,8 +52,17 @@ class TodoTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let toDo = toDos[indexPath.row]
+        performSegue(withIdentifier: "moveToUpdateDelete", sender: toDo)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            let addVC = segue.destination as! AddTodoViewController
+        
+        if let addVC = segue.destination as? AddTodoViewController{
             addVC.previousVC = self
+            
+            if(addVC.selectedToDO)
+        }
     }
 }

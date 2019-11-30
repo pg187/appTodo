@@ -11,6 +11,7 @@ import UIKit
 class AddTodoViewController: UIViewController {
     
     var previousVC = TodoTableViewController()
+    var selectedToDO = Todo()
 
     @IBOutlet weak var todoTitle: UITextField!
     
@@ -38,14 +39,25 @@ class AddTodoViewController: UIViewController {
     @IBAction func AddButton(_ sender: Any) {
         
         let toDo = Todo()
-        toDo.title = todoTitle.text!
-        toDo.text = todoText.text!
-        toDo.complete = completeSwitch.isOn
         
-        previousVC.toDos.append(toDo)
+        if let titleText = todoTitle.text
+        {
+            toDo.title = titleText
+            if let descText = todoText.text{
+                toDo.text = descText
+                toDo.complete = completeSwitch.isOn
+                
+                previousVC.toDos.append(toDo)
+                
+                previousVC.tableView.reloadData()
+                
+                navigationController?.popViewController(animated: true)
+            }
+            
+        }
         
-        previousVC.tableView.reloadData()
+    }
+    @IBAction func DeleteButton(_ sender: Any) {
         
-        navigationController?.popViewController(animated: true)
     }
 }
